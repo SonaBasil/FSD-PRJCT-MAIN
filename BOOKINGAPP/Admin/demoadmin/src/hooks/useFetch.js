@@ -1,50 +1,37 @@
-const { useEffect, useState } = require("react");
-const axios = require("axios").default;
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const useFetch = (url) => {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null); // Changed to null
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null); // Change initial state to null for error
 
-    useEffect(() => {
-        let mounted = true; // Flag to track if component is mounted
-
-        const fetchData = async () => {
-            setLoading(true);
-            try {
-                const res = await axios.get(url);
-                if (mounted) { // Check if component is still mounted before updating state
-                    setData(res.data);
-                    setError(null); // Reset error state if request is successful
-                }
-            } catch (err) {
-                if (mounted) {
-                    setError(err.message); // Set error message
-                }
-            }
-            setLoading(false);
-        };
-
-        fetchData();
-
-        return () => {
-            mounted = false; // Cleanup function to set mounted flag to false when component unmounts
-        };
-    }, [url]);
-
-    const reFetch = async () => {
-        setLoading(true);
-        try {
-            const res = await axios.get(url);
-            setData(res.data);
-            setError(null); // Reset error state if request is successful
-        } catch (err) {
-            setError(err.message); // Set error message
-        }
-        setLoading(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await axios.get(url);
+        setData(res.data);
+      } catch (err) {
+        setError(err.response.data); // Set error to err.response.data
+      }
+      setLoading(false);
     };
+    fetchData();
+  }, [url]);
 
-    return { data, loading, error, reFetch };
+  const reFetch = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(url);
+      setData(res.data);
+    } catch (err) {
+      setError(err.response.data); // Set error to err.response.data
+    }
+    setLoading(false);
+  };
+
+  return { data, loading, error, reFetch };
 };
 
 export default useFetch;

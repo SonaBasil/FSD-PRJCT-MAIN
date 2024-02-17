@@ -22,13 +22,14 @@ const Navbar = () => {
           <button className="navButton">Login</button>
           </Link>
           <div>
-            {/* Conditionally render the logout button if the user is logged in */}
-            {user ? ( 
-                <Link to="/logout">
-                    <button className="logoutButton">LOGOUT</button>
-                </Link>
-            ) : null}
-        </div>
+  {/* Conditionally render the logout button if the user is logged in */}
+  {user ? ( 
+    <Link to="/logout">
+      <button className="logoutButton">LOGOUT</button>
+    </Link>
+  ) : null}
+</div>
+
         </div>
         )}
       </div>

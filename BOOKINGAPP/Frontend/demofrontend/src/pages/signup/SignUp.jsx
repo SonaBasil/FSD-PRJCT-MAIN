@@ -1,70 +1,106 @@
-import React, { useContext, useState } from "react";
+import { useState } from "react";
 import "./signup.css";
 import axios from "axios";
-import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const [credentials, setCredentials] = useState({
-    username: "",
-    email: "",
-    password: ""
-  });
+    const [credentials, setCredentials] = useState({
+        username: "",
+        email: "",
+        password: "",
+        phone: "",
+        city : "",
+        country: ""
+    });
 
-  const { user, loading, error, dispatch } = useContext(AuthContext);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-  const handleChange = (e) => {
-    setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
-  };
+    const navigate = useNavigate();
 
-  const handleClick = async (e) => {
-    // e.preventDefault();
-    dispatch({ type: "REGISTER_START" });
-    try {
-      console.log(credentials)
-      const res = await axios.post("http://localhost:8080/auth/register", credentials);
-      dispatch({ type: "REGISTER_SUCCESS", payload: res.data });
-    } catch (err) {
-      dispatch({ type: "REGISTER_FAILURE", payload: err.response.data });
-    }
-  };
-  
+    const handleChange = (e) => {
+        setCredentials(prev => ({ ...prev, [e.target.id]: e.target.value }));
+    };
 
-  console.log(user);
+    const handleClick = async () => {
+        setLoading(true);
+        try {
+            const res = await axios.post("/auth/register", credentials);
+            // Assuming the server responds with user details after successful registration
+            console.log("User registered:", res.data);
+            // Redirect to login page after successful registration
+            navigate("/login");
+        } catch (err) {
+            setError(err.response.data.message);
+        }
+        setLoading(false);
+    };
 
-  return (
-    <div className="SignUp">
-      <h2 className="signupHeading">SIGNUP</h2>
-      <div className="sContainer">
-        <input
-          type="text"
-          placeholder="Username"
-          id="username"
-          onChange={handleChange}
-          className="sInput"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          id="email"
-          onChange={handleChange}
-          className="sInput"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          id="password"
-          onChange={handleChange}
-          className="sInput"
-        />
-        <button onClick={handleClick} className="sButton">
-          SIGN UP
-        </button>
-        <p className="loginLink">Already a user? &nbsp; <a href="/login">Login</a></p>
+    return (
+        <div className="SignUp">
+            <h2 className="signupHeading">SIGNUP</h2>
+            <div className="sContainer">
+                <input
+                    type="text"
+                    placeholder="Username"
+                    id="username"
+                    value={credentials.username}
+                    onChange={handleChange}
+                    className="sInput"
+                />
+                <input
+                    type="email"
+                    placeholder="Email"
+                    id="email"
+                    value={credentials.email}
+                    onChange={handleChange}
+                    className="sInput"
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    id="password"
+                    value={credentials.password}
+                    onChange={handleChange}
+                    className="sInput"
+                />
 
-        {error && <span className="error">{error.message}</span>}
-      </div>
-    </div>
-  );
+                  <input
+                    type="phone"
+                    placeholder="Phone"
+                    id="phone"
+                    value={credentials.phone}
+                    onChange={handleChange}
+                    className="sInput"
+                />
+
+
+                  <input
+                    type="country"
+                    placeholder="Country"
+                    id="country"
+                    value={credentials.country}
+                    onChange={handleChange}
+                    className="sInput"
+                />
+
+                 <input
+                    type="city"
+                    placeholder="City"
+                    id="city"
+                    value={credentials.city}
+                    onChange={handleChange}
+                    className="sInput"
+                />
+                <button disabled={loading} onClick={handleClick} className="sButton">
+                    SIGN UP
+                </button>
+                <p className="loginLink">Already a user? &nbsp; <a href="/login">Login</a></p>
+
+                {error && <span className="error">{error}</span>}
+            </div>
+        </div>
+    );
 };
 
 export default SignUp;

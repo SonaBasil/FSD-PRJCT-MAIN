@@ -1,24 +1,22 @@
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 const Logout = () => {
-    const { dispatch } = useContext(AuthContext);
-    const navigate = useNavigate();
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        // Perform logout actions
-        dispatch({ type: "LOGOUT" });
-        // Redirect to the login page after logout
-        navigate("/login");
-    }, [dispatch, navigate]);
+  const handleLogout = () => {
+    // Call the logout function from the AuthContext
+    logout();
+    // Redirect the user to the login page or another appropriate location
+    navigate("/login");
+  };
 
-    return (
-        <div>
-            <p>Logging out...</p>
-            {/* You can add a loading spinner or any other message here */}
-        </div>
-    );
+  // Only render the logout button if the user is logged in
+  return (
+    user && <button onClick={handleLogout}>Logout</button>
+  );
 };
 
 export default Logout;
