@@ -9,33 +9,34 @@ const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
   const [info, setInfo] = useState({});
 
-  const handleChange = e => {
-    setInfo(prev=> ({...prev,[e.target.id]: e.target.value}));
+  const handleChange = (e) => {
+    setInfo((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
+  
 
-  const handleClick = async e=>{
-    e.preventDefault()
-    const data = new FormData()
-    data.append("file", file)
-    data.append("upload_preset", "upload")
-    try{
+  const handleClick = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "upload");
+    try {
       const uploadRes = await axios.post(
-        "https://api.cloudinary.com/v1_1/dj9huwqgd/image/upload", 
-      data
+        "https://api.cloudinary.com/v1_1/dj9huwqgd/image/upload",
+        data
       );
-      const {url} = uploadRes.data
+      const { url } = uploadRes.data;
 
       const newUser = {
         ...info,
-        img : url,
+        img: url,
       };
 
       await axios.post("/auth/register", newUser);
-    }catch(err) {
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-  }
- 
+  };
+
   return (
     <div className="new">
       <Sidebar />
@@ -72,10 +73,12 @@ const New = ({ inputs, title }) => {
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
-                  <input onChange={handleChange}
-                   type={input.type} 
-                   placeholder={input.placeholder}
-                   id={input.id} />
+                  <input
+                    onChange={handleChange}
+                    type={input.type}
+                    placeholder={input.placeholder}
+                    id={input.id}
+                  />
                 </div>
               ))}
               <button onClick={handleClick}>Send</button>
