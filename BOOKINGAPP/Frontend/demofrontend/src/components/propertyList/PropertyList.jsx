@@ -30,7 +30,7 @@ const PropertyList = () => {
       </div>
       <div className="pListItem">
         <img
-          src="https://cf.bstatic.com/static/img/theme-index/carousel_320x240/card-image-apartments_300/9f60235dc09a3ac3f0a93adbc901c61ecd1ce72e.jpg"
+          src="https://media.istockphoto.com/id/1329937916/photo/scandinavian-domestic-dining-room-interior.jpg?s=612x612&w=0&k=20&c=jblput4MEg7QLUCIffJguBXIg1qYHXrpowBoLuiUasM="
           alt=""
           className="pListImg"
         />
@@ -41,7 +41,7 @@ const PropertyList = () => {
       </div>
       <div className="pListItem">
         <img
-          src="https://cf.bstatic.com/static/img/theme-index/carousel_320x240/bg_resorts/6f87c6143fbd51a0bb5d15ca3b9cf84211ab0884.jpg"
+          src="https://watermark.lovepik.com/photo/20211121/large/lovepik-hotel-room-picture_500597052.jpg"
           alt=""
           className="pListImg"
         />
@@ -52,7 +52,7 @@ const PropertyList = () => {
       </div>
       <div className="pListItem">
         <img
-          src="https://cf.bstatic.com/static/img/theme-index/carousel_320x240/card-image-villas_300/dd0d7f8202676306a661aa4f0cf1ffab31286211.jpg"
+          src="https://media.istockphoto.com/id/119926339/photo/resort-swimming-pool.jpg?s=612x612&w=0&k=20&c=9QtwJC2boq3GFHaeDsKytF4-CavYKQuy1jBD2IRfYKc="
           alt=""
           className="pListImg"
         />
